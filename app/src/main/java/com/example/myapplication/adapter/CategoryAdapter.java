@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -35,7 +36,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
       Category category=categoryAdapters.get(position);
-      holder.binding.label.setText(category.getName());
+      holder.binding.label.setText(HtmlCompat.fromHtml(category.getName(),HtmlCompat.FROM_HTML_MODE_LEGACY));
+//      holder.binding.label.setText(category.getName());
         Glide.with(context).load(category.getIcon()).into(holder.binding.image);
 //        holder.binding.image.setBackgroundColor(Color.parseColor(category.getColor()));
     }

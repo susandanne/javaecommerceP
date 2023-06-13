@@ -2,6 +2,7 @@ package com.example.myapplication.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -77,9 +78,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                     if(object.getString("status").equals("success")) {
                         JSONObject product = object.getJSONObject("product");
                         String description = product.getString("description");
-                        binding.productDescription.setText(
-                                (description)
-                        );
+                        binding.productDescription.setText(HtmlCompat.fromHtml(description,HtmlCompat.FROM_HTML_MODE_LEGACY));
+
+
 
 
                     }

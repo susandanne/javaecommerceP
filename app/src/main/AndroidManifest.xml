@@ -17,7 +17,9 @@
         tools:targetApi="31">
         <activity
             android:name=".activity.CartActivity"
-            android:exported="false">
+            android:label="Shopping Cart"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.Actionbar.bar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -31,6 +33,7 @@
         </activity>
         <activity
             android:name=".activity.ProductDetailActivity"
+
             android:exported="false"
             android:theme="@style/Theme.MyApplication.Actionbar.bar">
             <meta-data
