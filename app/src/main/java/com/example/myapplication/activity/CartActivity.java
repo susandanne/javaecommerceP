@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.myapplication.adapter.CartAdapter;
 import com.example.myapplication.databinding.ActivityCartBinding;
@@ -27,7 +29,7 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding=ActivityCartBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
        productArrayList=new ArrayList<>();
 //       productArrayList.add(new Product("name","","",1,22,33,1));
         Cart cart = TinyCartHelper.getCart();
@@ -39,7 +41,12 @@ public class CartActivity extends AppCompatActivity {
 
        }
 
-       cartAdapter=new CartAdapter(this,productArrayList);
+       cartAdapter=new CartAdapter(this, productArrayList, new CartAdapter.Cartlistner() {
+           @Override
+           public void onQuantityChanged() {
+               binding.subtotal.setText(String.format("dollar %.2f ",cart.getTotalPrice()));
+           }
+       });
 
        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         DividerItemDecoration dividerItemDecoration=new DividerItemDecoration(this,linearLayoutManager.getOrientation());
@@ -47,6 +54,14 @@ public class CartActivity extends AppCompatActivity {
        binding.cartList.setLayoutManager(linearLayoutManager);
        binding.cartList.setAdapter(cartAdapter);
 
+       binding.subtotal.setText(String.format("dollar %.2f ",cart.getTotalPrice()));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        binding.continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CartActivity.this,CheckoutActivity2.class));
+            }
+        });
     }
 
     @Override

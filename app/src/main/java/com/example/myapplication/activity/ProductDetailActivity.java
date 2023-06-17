@@ -53,6 +53,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
               cart.addItem(currentPoduct,1);
+              binding.addToCartBtn.setEnabled(false);
+              binding.addToCartBtn.setText("data added to cart");
             }
         });
 
