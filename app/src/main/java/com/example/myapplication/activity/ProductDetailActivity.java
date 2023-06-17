@@ -10,6 +10,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,13 +21,17 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityProductDetailBinding;
+import com.example.myapplication.model.Product;
 import com.example.myapplication.utils.Constants;
+import com.hishd.tinycart.model.Cart;
+import com.hishd.tinycart.util.TinyCartHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ProductDetailActivity extends AppCompatActivity {
     ActivityProductDetailBinding binding;
+    Product currentPoduct;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +47,15 @@ public class ProductDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
          getProductDetails(id);
+
+        Cart cart = TinyCartHelper.getCart();
+        binding.addToCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              cart.addItem(currentPoduct,1);
+            }
+        });
+
     }
 
     @Override
@@ -79,11 +93,21 @@ public class ProductDetailActivity extends AppCompatActivity {
                         JSONObject product = object.getJSONObject("product");
                         String description = product.getString("description");
                         binding.productDescription.setText(HtmlCompat.fromHtml(description,HtmlCompat.FROM_HTML_MODE_LEGACY));
+                        currentPoduct=new Product(
+                                product.getString("name"),
+                                Constants.PRODUCTS_IMAGE_URL+product.getString("image"),
+                                product.getString("status"),
+                                product.getDouble("price"),
+                                product.getDouble("price_discount"),
+                                product.getInt("stock"),
+                                product.getInt("id")
 
-
+                        );
 
 
                     }
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

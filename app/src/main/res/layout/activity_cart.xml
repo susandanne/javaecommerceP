@@ -61,9 +61,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="PKR 0.0"
+            android:text="dollar 0.0"
             android:textColor="#4CAF50"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
